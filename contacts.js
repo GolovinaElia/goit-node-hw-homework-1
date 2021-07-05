@@ -28,17 +28,32 @@ const getContactById = async (contactId) => {
   }
 }
 
-const addContact = async (obj) => {
-  const newContact = { id: v4(), ...obj }
+const removeContact = async (contactId) => {
   try {
     const contacts = await listContacts()
-    const newContacts = [...contacts, newContact]
-    const str = JSON.stringify(newContacts)
-    // await updateContacts(newContacts)
-    return newContact
+    const index = contacts.findIndex((item) => item.id === contactId)
+    if (index === -1) {
+      throw new Error("Id incorrect")
+    }
+    const filteredContacts = contacts.filter((item) => item.id !== contactId)
+    const str = JSON.stringify(filteredContacts)
+    fs.writeFile(contactsPath, str)
   } catch (error) {
     throw error
   }
 }
 
-module.exports = { listContacts, getContactById, addContact }
+const addContact = async ({ name, email, phone }) => {
+  const newContact = { id: v4(), name, email, phone }
+  try {
+    const contacts = await listContacts()
+    const newContacts = [...contacts, newContact]
+    const str = JSON.stringify(newContacts)
+    await fs.writeFile(contactsPath, str)
+    return newContacts
+  } catch (error) {
+    throw error
+  }
+}
+
+module.exports = { listContacts, getContactById, removeContact, addContact }
