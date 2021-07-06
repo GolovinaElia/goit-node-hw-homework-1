@@ -39,7 +39,7 @@ async function invokeAction({ action, id, name, email, phone }) {
       break
 
     case "remove":
-      await removeContact(id)
+      await removeContact(Number(id))
       break
 
     default:
@@ -48,23 +48,3 @@ async function invokeAction({ action, id, name, email, phone }) {
 }
 
 invokeAction(argv)
-// ;(async () => {
-//   try {
-//     const contacts = await listContacts()
-//     console.log(contacts)
-//     contactId = 5
-//     const oneContact = await getContactById(contactId)
-//     console.log(oneContact)
-//     const newContact = {
-//       name: "Mango",
-//       email: "mango@gmail.com",
-//       phone: "322-22-22",
-//     }
-//     const resultNewContact = await addContact(newContact)
-//     console.log(resultNewContact)
-
-//     await removeContact("d028f10b-5bd0-40e0-a3a9-476e9ead7b94")
-//   } catch (error) {
-//     throw error
-//   }
-// })()
